@@ -9,15 +9,27 @@
     <!-- <script src="main.js"></script> -->
 </head>
 <body>
-    <h1> {{position}} Election! </h1>
+    <h1>President/ Vice president election!</h1>
     <span class = 'warning'>Warning: Vote carefully!</span>
-    <form action="/votesuccessful" method="POST">
+    <form id ='VoteForm'action="/votesuccessful" method="POST">
         <ul>
             {%for candidate in candidatenamelist%}
-            <li> <span>{{candidate}}</span> <input type="radio" name="p" value = {{candidate}}><a href='/{{candidate}}'>Know more about this guy</a></li>
+            <li> <span>{{candidate}}</span> <input type="radio" name="p" value = "{{candidate}}"><a href='/{{candidate}}'>Know more about them</a></li>
             {% endfor %}
         </ul>
-        <input type="submit" value="Vote!">
+        <button type="button" onclick="submitform()">Submit</button>
     </form>
+    <script>
+        var cookie = document.cookie;
+        function submitform(){
+            if(cookie!=""){
+                alert('You have already voted!');
+            }else{
+                document.cookie = "Voted:true"
+                document.getElementById('VoteForm').submit();
+            }
+
+        }
+    </script>
 </body>
 </html>
