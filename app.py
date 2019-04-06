@@ -56,4 +56,4 @@ def check():
    # session[p] += 1
    return render_template('sucess.html')
 
-app.run(debug = True)
+# app.run(debug = True)
