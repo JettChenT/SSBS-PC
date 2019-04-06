@@ -1,5 +1,8 @@
 from flask import Flask, render_template,redirect,request,session
-
+import json
+# ----app init-----
+with open('votes.json','r') as f:
+   data = json.load(f)
 
 app = Flask(__name__)
 class Candidate():
@@ -8,15 +11,17 @@ class Candidate():
       self.route =  '/'+name
       self.position = position
       self.story = story
+      self.votes = data[self.name]
       # Vote
       # session[name] = 0
-
+   def vote(self):
+      data[self.name]+=1
+      with open('votes.json','w') as f:
+         json.dump(data,f)
 Thanos = Candidate('Thanos','president','Thanos wiped out half of the universe!!!')
 Loki = Candidate('Loki','vice president',"Loki isn't low-key!")
 Hela = Candidate('Hela','president',"Hela destroyed Thor's hammer!")
 Venom = Candidate('Venom','vice president','Venom eats your head!')
-
-
 candidatelist = [Thanos,Loki,Hela,Venom]
 candidatenamelist = []
 plist = []
@@ -28,6 +33,7 @@ for villian in candidatelist:
    else:
       vplist.append(villian.name)
 
+# Routes
  
 @app.route('/')
 def homepage():
@@ -41,19 +47,20 @@ def generate(candidate):
    else:
       i = candidatenamelist.index(candidate)
       cdd = candidatelist[i]
-      return render_template('candidate.html',candidate = cdd.name, position = cdd.position, story = cdd.story)
+      lis = cdd.position.split(' ')
+      pst = ''.join(lis)
+      return render_template('candidate.html',candidate = cdd.name, position = cdd.position, story = cdd.story,pst = pst)
 
 @app.route('/vote/president')
 def voteforp():
-   return render_template('vote.html',position = 'President', id = 'p', candidatenamelist = plist)
-
+   return render_template('vote.html',position = 'President', candidatenamelist = plist)
 @app.route('/vote/vicepresident')
 def voteforvp():
-   return render_template('vote.html',position = 'Vice president', id = 'p', candidatenamelist = vplist)
-
+   return render_template('vote.html',position = 'Vice president', candidatenamelist = vplist)
 @app.route('/votesuccessful',methods = ['POST'])
 def check():
-   # session[p] += 1
+   candidatelist[candidatenamelist.index(request.form['p'])].vote()
    return render_template('sucess.html')
 
-# app.run(debug = True)
+if __name__ == '__main__':
+   app.run(debug=True)
