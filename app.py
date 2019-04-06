@@ -3,7 +3,6 @@ import json
 # ----app init-----
 with open('votes.json','r') as f:
    data = json.load(f)
-
 app = Flask(__name__)
 class Candidate():
    def __init__(self,name,position,story):
@@ -61,6 +60,11 @@ def voteforvp():
 def check():
    candidatelist[candidatenamelist.index(request.form['p'])].vote()
    return render_template('sucess.html')
-
+@app.route('/stats')
+def show_stats():
+   pprint = ''
+   for i in data:
+      pprint+=i+':'+str(data[i])+'</br>'
+   return pprint
 if __name__ == '__main__':
    app.run(debug=True)
