@@ -4,20 +4,37 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Vote page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="/static/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="/static/main.css"> -->
     <!-- <script src="main.js"></script> -->
+    <style>
+        .list-icon{
+            width: 500px;
+        }
+        #submit,h4{
+            margin-left: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>President/ Vice president election!</h1>
-    <span class = 'warning'>Warning: Vote carefully!</span>
+    <h4>You vote for :</h2>
+    <!-- <span>Warning: Vote carefully!</span> -->
     <form id ='VoteForm'action="/votesuccessful" method="POST">
-        <ul>
+        <ul class="list-icon mdl-list">
             {%for candidate in candidatenamelist%}
-            <li> <span>{{candidate}}</span> <input type="radio" name="p" value = "{{candidate}}"><a href='/{{candidate}}'>Know more about them</a></li>
+            <li class="mdl-list__item"> 
+                <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-avatar">person</i>
+                    <a href='/{{candidate}}'>{{candidate}}</a> 
+                </span>
+                <input type="radio" name="p" value = "{{candidate}}">
+            </li>
             {% endfor %}
         </ul>
-        <button type="button" onclick="submitform()">Submit</button>
+        <button id="submit"type="button" onclick="submitform()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">Submit</button>
     </form>
     <script>
         var cookie = document.cookie;
@@ -25,10 +42,9 @@
             if(cookie!=""){
                 alert('You have already voted!');
             }else{
-                document.cookie = "Voted:true"
+                document.cookie = "Voted:true";
                 document.getElementById('VoteForm').submit();
             }
-
         }
     </script>
 </body>
