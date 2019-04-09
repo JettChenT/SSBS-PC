@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Vote page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="https://www.ssbs.sh.cn/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css" />
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
@@ -45,8 +46,11 @@
                     {%for candidate in candidatenamelist%}
                    <li class="mdl-list__item"> 
                         <span class="mdl-list__item-primary-content name">
+                            <div class="mdl-tooltip" for="avatar{{candidate}}">
+                                Know more
+                            </div>
                             <a href="/{{candidate}}">
-                                <i class="material-icons mdl-list__item-avatar link">person</i>
+                                <i class="material-icons mdl-list__item-avatar link" id ="avatar{{candidate}}">person</i>
                             </a>
                             <span>{{candidate}}</span>
                         </span>
@@ -59,11 +63,11 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="mdl-card__actions mdl-card--border">
-                    <button type="button" onclick="submitform()" id="btn"class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent btn">
-                            <i class="material-icons">how_to_vote</i>
-                    </button>
-                    <span id="voted">You have already voted</span>
+            <div class="mdl-card__actions mdl-card--border">        
+                <button type="button" onclick="submitform()" id="btn"class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent btn">
+                        <i class="material-icons">how_to_vote</i>
+                </button>
+                <span id="voted">You have already voted</span>
             </div>
         </div>
     </form>
