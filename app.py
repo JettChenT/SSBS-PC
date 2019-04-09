@@ -46,9 +46,6 @@ def check():
    return render_template('sucess.html')
 @app.route('/stats')
 def show_stats():
-   pprint = ''
-   for i in data:
-      pprint+=i+':'+str(data[i])+'</br>'
-   return pprint
+   return str(data)
 if __name__ == '__main__':
    app.run(debug=True)
