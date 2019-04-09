@@ -35,19 +35,18 @@
             </li>
             {% endfor %}
         </ul>
-        <button type="button" onclick="submitform()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent btn">
+        <button type="button" onclick="submitform()" id="btn"class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent btn">
             <i class="material-icons">how_to_vote</i>
         </button>
     </form>
     <script>
         var cookie = document.cookie;
+        if(cookie!=""){
+            document.getElementById('btn').disabled = true;
+        }
         function submitform(){
-            if(cookie!=""){
-                alert('You have already voted!');
-            }else{
-                document.cookie = "Voted:true"
-                document.getElementById('VoteForm').submit();
-            }
+            document.cookie = "Voted:true"
+            document.getElementById('VoteForm').submit();
         }
     </script>
 </body>
