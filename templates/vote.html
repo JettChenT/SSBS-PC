@@ -11,38 +11,70 @@
     <!-- <script src="main.js"></script> -->
     <style>
         .list-action{
-            width: 800px;
+            width: 400px;
+            margin: auto;
         }
         .btn{
             margin-left: 30px;
         }
+        #voted{
+            display:none;
+        }
+
+        #votecard{
+            width: 500px;
+            margin: auto;
+        }
+        .name{
+            display: inline-block;
+        }
+        .list-radio{
+            display: inline;
+        }
     </style>
 </head>
 <body>
-    <h1>President/ Vice president election!</h1>
-    <span class = 'warning'>Warning: Vote carefully!</span>
+    <h4>President/ Vice president election!</h4>
     <form id ='VoteForm'action="/votesuccessful" method="POST">
-        <ul class="list-action mdl-list">
-            {%for candidate in candidatenamelist%}
-            <li class="mdl-list__item"> 
-                <span class="mdl-list__item-primary-content">
-                    <a href="/{{candidate}}">
-                        <i class="material-icons mdl-list__item-avatar link">person</i>
-                    </a>
-                    <span>{{candidate}}</span>
-                </span> 
-                <input type="radio" name="p" value = "{{candidate}}">
-            </li>
-            {% endfor %}
-        </ul>
-        <button type="button" onclick="submitform()" id="btn"class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent btn">
-            <i class="material-icons">how_to_vote</i>
-        </button>
+    <div class="mdl-card  mdl-shadow--4dp" id="votecard">
+        <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Candidates</h2>
+        </div>
+            <div class="mdl-card__supporting-text">
+                <ul class="list-action mdl-list">
+                    {%for candidate in candidatenamelist%}
+                   <li class="mdl-list__item"> 
+                        <span class="mdl-list__item-primary-content name">
+                            <a href="/{{candidate}}">
+                                <i class="material-icons mdl-list__item-avatar link">person</i>
+                            </a>
+                            <span>{{candidate}}</span>
+                        </span>
+                        <span class="mdl-list__item-secondary-action">
+                            <label for="{{candidate}}" class="list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect">
+                                <input id="{{candidate}}"type="radio" class="mdl-radio__button cdds" name="p" value = "{{candidate}}">
+                            </label>
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                    <button type="button" onclick="submitform()" id="btn"class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent btn">
+                            <i class="material-icons">how_to_vote</i>
+                    </button>
+                    <span id="voted">You have already voted</span>
+            </div>
+        </div>
     </form>
     <script>
         var cookie = document.cookie;
+        cdds = document.getElementsByClassName("cdds");
+        first = cdds[0];
+        first.checked=true;
         if(cookie!=""){
             document.getElementById('btn').disabled = true;
+            document.getElementById('voted').style.display="inline"
         }
         function submitform(){
             document.cookie = "Voted:true"
