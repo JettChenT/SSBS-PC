@@ -35,7 +35,7 @@
     </style>
 </head>
 <body>
-    <h4>President/ Vice president election!</h4>
+    <h4>President/ Vice president election for Marvel {{Type}}s!</h4>
     <form id ='VoteForm'action="/votesuccessful" method="POST">
     <div class="mdl-card  mdl-shadow--4dp" id="votecard">
         <div class="mdl-card__title">
@@ -67,7 +67,7 @@
                 <button type="button" onclick="submitform()" id="btn"class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent btn">
                         <i class="material-icons">how_to_vote</i>
                 </button>
-                <span id="voted">You have already voted</span>
+                <span id="voted">You have already voted for {{Type}}, <a href="/">go back</a></span>
             </div>
         </div>
     </form>
@@ -76,12 +76,28 @@
         cdds = document.getElementsByClassName("cdds");
         first = cdds[0];
         first.checked=true;
-        if(cookie!=""){
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+              var c = ca[i];
+              while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+              }
+              if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+              }
+            }
+            return "";
+        }
+        console.log(getCookie("{{Type}}"))
+        if(getCookie("{{Type}}") != ""){
             document.getElementById('btn').disabled = true;
             document.getElementById('voted').style.display="inline"
         }
         function submitform(){
-            document.cookie = "Voted:true"
+            document.cookie = "{{Type}}=true"
             document.getElementById('VoteForm').submit();
         }
     </script>
