@@ -18,8 +18,12 @@ TL = Candidate('Thanos and Loki','Thanos and Loki, the most powerful couple!')
 HV = Candidate('Hela and Venom',"Hela destroyed Thor's hammer, and Venom got Eminem's help!")
 MR = Candidate('Magneto and Red Skull','A cute cuple from WWII!')
 US = Candidate('Ultron and Surtur','AI and a giant!')
+DI = Candidate('Dr Strange and Iron Man','Magic and technology!')
+SC = Candidate('Spiderman and Scralet Witch','Spider and a witch!')
+DS = Candidate('Deadpool and Starlord', 'Two of the most talkative heros in the Marvel universe!')
+GH  = Candidate('Groot and Hulk','Two giants!!!')
 
-candidatelist = [TL,HV,MR,US]
+candidatelist = [TL,HV,MR,US,DI,SC,DS,GH]
 candidatenamelist = []
 for i in candidatelist:
    candidatenamelist.append(i.name) 
