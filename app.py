@@ -1,4 +1,4 @@
-from flask import Flask, render_template,redirect,request,make_response
+from flask import Flask, render_template,redirect,request,make_response,abort
 import json
 # ----app init-----
 with open('votes.json','r') as f:
@@ -42,7 +42,7 @@ def homepage():
 @app.route('/<candidate>')
 def generate(candidate):
    if candidate not in candidatenamelist:
-      return
+      abort(404)
    else:
       i = candidatenamelist.index(candidate)
       cdd = candidatelist[i]
@@ -62,5 +62,10 @@ def check():
 @app.route('/stats')
 def show_stats():
    return str(data)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 if __name__ == '__main__':
    app.run(debug=True)
