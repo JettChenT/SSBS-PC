@@ -1,9 +1,15 @@
 from flask import Flask, render_template,redirect,request,make_response,abort
+from flask_basicauth import BasicAuth
 import json
 # ----app init-----
 with open('votes.json','r') as f:
    data = json.load(f)
+
 app = Flask(__name__)
+app.config['BASIC_AUTH_USERNAME'] = 'admin'
+app.config['BASIC_AUTH_PASSWORD'] = 'IAmJettOrMrPeter,OrElseIAmAPig'
+basic_auth = BasicAuth(app)
+
 class Candidate():
    def __init__(self,name,story,Type):
       self.name = name
@@ -60,6 +66,7 @@ def check():
    candidatelist[candidatenamelist.index(request.form['p'])].vote()
    return render_template('sucess.html')
 @app.route('/stats')
+@basic_auth.required
 def show_stats():
    return str(data)
 
