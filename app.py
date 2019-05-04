@@ -1,19 +1,11 @@
 from flask import Flask, render_template,redirect,request,make_response,abort
-from flask_basicauth import BasicAuth
 import json
 from pymongo import MongoClient
 # ----app init-----
-with open('votes.json','r') as f:
-   data = json.load(f)
-
 client = MongoClient("mongodb+srv://admin:JettChen@cluster0-869xj.mongodb.net/test?retryWrites=true")
 db = client.votes
 
-
 app = Flask(__name__)
-app.config['BASIC_AUTH_USERNAME'] = 'admin'
-app.config['BASIC_AUTH_PASSWORD'] = 'IAmJettOrMrPeter,OrElseIAmAPig'
-basic_auth = BasicAuth(app)
 
 db = client.votes
 
@@ -45,7 +37,7 @@ candidatelist = villainlist+herolist
 villain_name_list = []
 hero_name_list = []
 for i in villainlist:
-   villain_name_list.append(i.name) 
+   villain_name_list.append(i.name)
 for i in herolist:
    hero_name_list.append(i.name)
 candidatenamelist = villain_name_list + hero_name_list
@@ -69,13 +61,15 @@ def votehero():
 @app.route('/vote/villain')
 def votevillain():
    return render_template('vote.html',candidatenamelist = villain_name_list,Type = 'villain')
-def method_name():
-   pass
 
 @app.route('/votesuccessful',methods = ['POST'])
 def check():
    candidatelist[candidatenamelist.index(request.form['p'])].vote()
    return render_template('sucess.html')
+
+@app.route('/stats')
+def show_stats():
+    return render_template('stats.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
