@@ -53,34 +53,7 @@ candidatenamelist = villain_name_list + hero_name_list
 @app.route('/')
 def homepage():
     return render_template('index.html')
-
-
-@app.route('/<candidate>')
-def generate(candidate):
-    if candidate not in candidatenamelist:
-        abort(404)
-    else:
-        i = candidatenamelist.index(candidate)
-        cdd = candidatelist[i]
-        return render_template('candidate.html', candidate=cdd.name, story=cdd.story, Type=cdd.type)
-
-
-@app.route('/vote/hero')
-def votehero():
-    return render_template('vote.html', candidatenamelist=hero_name_list, Type='hero')
-
-
-@app.route('/vote/villain')
-def votevillain():
-    return render_template('vote.html', candidatenamelist=villain_name_list, Type='villain')
-
-
-@app.route('/votesuccessful', methods=['POST'])
-def check():
-    candidatelist[candidatenamelist.index(request.form['p'])].vote()
-    return render_template('sucess.html')
-
-
+    
 @app.route('/stats')
 def show_stats():
     return render_template('stats.html')
